@@ -12,7 +12,8 @@ By the end of this workshop, you will:
 
 
 ## Workshop Materials
-- `USDI-Training-4.Rmd`: The main R Markdown document containing the workshop content.
+- `USDI-Training-4.pdf`: The main R pdf document containing the workshop content.
+- `USDI-Training-4.Rmd`: The main R Markdown document providing you access to the material and enabling you to run the codes independently.
 - `officew.csv`: Sample dataset used for data manipulation exercises.
 
 
