@@ -10,6 +10,12 @@ By the end of this workshop, you will:
 - Understand how to work with real-life datasets from government and NGO sectors.
 - Learn causal inference analysis techniques using R.
 
+
+## Workshop Materials
+- `USDI-Training-4.Rmd`: The main R Markdown document containing the workshop content.
+- `officew.csv`: Sample dataset used for data manipulation exercises.
+
+
 ## Setting up R and RStudio
 To get started with the workshop, you need to install R and RStudio on your computer. Follow the installation instructions below:
 
