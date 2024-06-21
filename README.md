@@ -34,7 +34,7 @@ GitHub is a platform where you can host and collaborate on code repositories. To
 
 1. **Clone the GitHub Repository**: 
 Clone the GitHub repository to your local machine by running the following command in your terminal or command prompt:
-git clone https://github.com/1864initiative/UDSI.git
+git clone https://github.com/abiola1864/UDSI.git
 
 
 
