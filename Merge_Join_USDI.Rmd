@@ -1,0 +1,470 @@
+---
+title: "(USDI): Merge,  Join and Preparing Data for Plots"
+author: "Abiola Oyebanjo"
+date: "July 4-6 , 2024"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 2
+    number_sections: yes
+    df_print: kable
+    keep_tex: yes
+    pandoc_args:
+    - "--pdf-engine=xelatex"
+    - "--variable=urlcolor=blue"
+    - "--variable=colorlinks:yes"
+  header-includes: \usepackage{hyperref}
+  html_document:
+    toc: yes
+    toc_depth: '2'
+    df_print: paged
+  word_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+    
+---
+
+
+
+# Import Libraries Dataframes
+
+
+
+
+```{r , message=F}
+library(dplyr)
+library(tidyverse)
+library(reshape2) # for melt
+```
+
+
+
+
+
+# Set Working Directory
+
+
+```{r echo=FALSE, out.width = "90%", fig.align = "center"}
+#setwd("/Users/User3/Downloads/
+
+```
+# Joining Dataframes
+
+
+## Joining dataframes
+Joining dataframes is a common operation when working with relational data. It allows us to combine information from different sources based on common variables.
+
+### Creating Sample Dataframes
+Let's start by creating two simple dataframes:
+
+
+
+```{r , message=F}
+df1 <- data.frame(
+  ID = 1:5,
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve")
+)
+
+df2 <- data.frame(
+  ID = 2:6,
+  Score = c(85, 92, 78, 95, 88)
+)
+
+print(df1)
+print(df2)
+```
+
+
+
+Here, we've created two dataframes:
+
+`df1` contains student IDs and names
+`df2` contains student IDs and scores
+
+Notice that the IDs don't perfectly align between the two dataframes. This is intentional to demonstrate different join behaviors.
+
+## Using merge() from Base R
+The `merge()` function in base R is versatile and can perform various types of joins.
+
+## Left Join
+
+
+```{r , message=F}
+
+left_merge <- merge(df1, df2, by = "ID", all.x = TRUE)
+print(left_merge)
+
+```
+
+
+Explanation:
+
+`by = "ID"` specifies that we're joining on the "ID" column
+
+`all.x = TRUE` means we keep all rows from the left dataframe (df1), even if there's no match in df2
+
+This results in NA values for scores where there's no match in df2
+
+## Right Join
+
+
+```{r , message=F}
+right_merge <- merge(df1, df2, by = "ID", all.y = TRUE)
+print(right_merge)
+```
+
+Explanation:
+
+`all.y` = TRUE means we keep all rows from the right dataframe (df2), even if there's no match in df1
+This results in NA values for names where there's no match in df1
+
+## Inner Join
+
+```{r , message=F}
+inner_merge <- merge(df1, df2, by = "ID")
+print(inner_merge)
+```
+
+
+Explanation:
+
+Without `all.x` or `all.y`, merge() performs an inner join by default
+This keeps only the rows where there's a match in both dataframes
+
+## Full Outer Join
+```{r , message=F}
+full_merge <- merge(df1, df2, by = "ID", all = TRUE)
+print(full_merge)
+```
+
+Explanation:
+
+`all = TRUE` keeps all rows from both dataframes, filling in NA where there's no match
+This is useful when you want to see all data from both sources, regardless of matches
+
+# Using dplyr for Joins
+The dplyr package provides more intuitive join functions that are often preferred in modern R programming.
+
+## Left Join
+```{r , message=F}
+left_join_dplyr <- left_join(df1, df2, by = "ID")
+print(left_join_dplyr)
+```
+
+
+Explanation:
+
+`left_join()` keeps all rows from df1 and adds matching data from df2
+It's equivalent to the left merge we did earlier, but with a more readable syntax
+
+## Right Join
+```{r , message=F}
+left_join_dplyr <- left_join(df1, df2, by = "ID")
+print(left_join_dplyr)
+```
+
+Explanation:
+
+`right_join()` keeps all rows from df2 and adds matching data from df1
+It's equivalent to the right merge we did earlier
+
+## Inner Join
+
+```{r , message=F}
+inner_join_dplyr <- inner_join(df1, df2, by = "ID")
+print(inner_join_dplyr)
+```
+
+Explanation:
+
+`inner_join()` keeps only rows with matches in both dataframes
+It's equivalent to the inner merge we did earlier
+
+## Full Join
+```{r , message=F}
+full_join_dplyr <- full_join(df1, df2, by = "ID")
+print(full_join_dplyr)
+```
+
+Explanation:
+
+`full_join()` keeps all rows from both dataframes, filling in NA where there's no match
+It's equivalent to the full outer merge we did earlier
+
+# Reshaping Data (for Visualization and Panel Data Analysis)
+Reshaping data involves changing the structure of a dataset without changing the information it contains. The two main forms are "wide" and "long" formats. This is very helpful for visualization purposes and Panel (Longitudinal) data analysis. Longitudinal data involves repeated observations of the same variables over time for the same subjects. This type of data allows for the analysis of changes over time and the study of temporal dynamics within the data.
+
+## Wide to Long Format
+In wide format, each subject's responses are in a single row. In long format, each row is a single subject-variable combination.
+
+Let's create a wide format dataframe:
+
+```{r , message=F}
+wide_df <- data.frame(
+  ID = 1:2,
+  Math = c(35, 32, 48, 44),
+  English = c(92, 88, 95, 89),
+  Science = c(49, 85, 40,55),
+  Year =c(2023, 2023, 2024,2024)
+)
+
+print(wide_df)
+```
+
+
+### Using melt() from reshape2
+
+```{r , message=F}
+long_df_melt <- melt(wide_df, id.vars = "ID", 
+                     variable.name = "Subject", value.name = "Score")
+
+print(long_df_melt)
+```
+
+Explanation:
+
+`melt()` is similar to gather() but from an older package
+`id.vars` specifies which columns to keep as is
+`variable.name` and `value.name` specify names for the new columns
+
+
+### Reshape the data to long format, excluding the Year column
+```{r , message=F}
+
+long_df_melt1 <- pivot_longer(wide_df, 
+                        cols = c(Math, English, Science), 
+                        names_to = "Subject", 
+                        values_to = "Score")
+
+print(long_df_melt1)
+```
+
+
+### Using gather() from tidyr
+
+
+```{r , message=F}
+long_df_gather <- wide_df %>%
+  gather(key = "Subject", value = "Score", -c(ID,Year))
+
+print(long_df_gather)
+```
+
+
+Explanation:
+
+`gather()` takes all columns except ID and creates two new columns:
+
+`Subject`: contains the original column names (Math, English, Science)
+
+`Score`: contains the values from those columns
+
+
+
+## Using pivot_longer from tidyverse (preferred)
+
+For this course, we will be using `pivot_longer` from the `tidyverse` package frequently. The reason is that, like other similar functions discussed above, `pivot_longer` allows us to transform data from a wide format to a long format, which is essential for many types of data analysis and visualization tasks. More on in the next section:
+
+# Preparing Data for Visualization 
+`pivot_longer`: This function is particularly useful because it converts multiple columns into key-value pairs, creating a single column for the variable names and another for the values. This is crucial when we need a single column for the x or y axis in our plots. In wide format data, having multiple columns for what we want to plot can complicate the visualization process.
+
+`summarize`: We use this function to calculate summary statistics such as average percentages for each subject across all rows.
+
+`starts_with`: This function helps us select columns that start with a specific string, which is useful when dealing with data that has multiple similarly named columns, like percentages in this example.
+
+```{r , message=F}
+# Transform from wide to long using pivot_longer
+long_df_pivot <- pivot_longer(wide_df,
+            cols = -c(ID, Year), # Columns to pivot (excluding ID and Year)
+            names_to = "Subject", # New column for variable names
+            values_to = "Score")%>%  # New column for values
+  mutate(ID = as.factor(ID))  # Convert ID to factor
+
+
+# Print the resulting long data frame
+print(long_df_pivot)
+
+```
+
+
+### Preparing data for plotting 
+
+Long format and summarizing the data are important steps to plotting. Let plots the average scores for each course using ggplot by following the steps below:
+
+## Step 1: Use mutate to calculate percentages in a new vector
+```{r , message=F}
+
+data_percent <- wide_df %>%
+  mutate(total = Math + English + Science) %>%
+  mutate(percent_Math = Math / total * 100,
+         percent_English = English / total * 100,
+         percent_Science = Science / total * 100)
+print(data_percent)
+```
+
+## Step 2: Calculate average/mean percentages per course
+```{r , message=F}
+## Calculate average percentages
+avg_percent <- data_percent %>%
+  summarise(avg_Math = mean(percent_Math),
+            avg_English = mean(percent_English),
+            avg_Science = mean(percent_Science))
+
+avg_percent
+```
+
+
+## Step 3: use starts_with (in pivot_longer) to pivot data to long
+```{r , message=F}
+data_long <- avg_percent %>%
+  pivot_longer(cols = starts_with("avg_"),
+               names_to = "Subject",
+               values_to = "Percentage") 
+print(data_long)
+```
+
+
+
+
+## Step 4: Rename columns
+
+```{r , message=F}
+avg_percent <- data_long %>%
+  mutate(Subject = factor(Subject, levels = c("avg_Math", "avg_English", "avg_Science"),
+                          labels = c("Math", "English", "Science")))
+
+print(avg_percent)
+```
+
+
+
+
+## Step 5: Plot the data
+```{r , message=F}
+# Plotting using ggplot2
+ggplot(avg_percent, aes(x = Subject, y = Percentage, fill = Subject)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Percentage Distribution by Subject",
+       x = "Subject", y = "Percentage") +
+  theme_minimal()
+
+```
+
+
+
+
+
+## Step 6: Plotting with customizations
+
+
+```{r , message=F}
+# Define custom color palette
+custom_colors <- c("#126e96", "#8B4513", "#CD853F") 
+
+# Plotting with customizations
+plot <- ggplot(avg_percent, aes(x = Subject, y = Percentage, fill = Subject)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = custom_colors) +
+  labs(title = "Percentage Distribution by Subject",
+       x = "Subject", y = "Percentage") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom") +
+  ylab("Percentage") +
+  geom_text(aes(label = paste0(round(Percentage), "%")), hjust = 3.5)+
+  coord_flip()
+
+# Print the plot
+print(plot)
+```
+
+## Step 7: Plotting with customizations with geom_point and faceting
+###  Scores by Year for Each Subject per Student
+```{r , message=F}
+
+# Ensure the Year are treated as factors
+long_df_pivot$Year<- as.factor(long_df_pivot$Year)
+
+# Plotting scores by Year for Each Subject with points, lines, and y-axis labels
+plot_points <- ggplot(long_df_pivot, aes(x = Subject, y = Score, color = Subject)) +
+  geom_point(linewidth = 3) +
+  geom_line(aes(group = ID), linewidth = 1) +  # Add a line connecting points for each ID
+  geom_text(aes(label = Score), vjust=0.9, hjust = -1.0, size = 3) +  # Add y-axis labels
+  scale_color_manual(values = custom_colors) +
+  labs(title = "Scores by Year for Each Subject per Student",
+       x = "Subject", y = "Score") +
+  theme_minimal() +
+  theme(plot.title = element_text(vjust = 1.5), legend.position = "bottom") +
+  facet_grid(Year ~ ID, scales = "free_x")  # Facet by Year
+
+
+# Print the plot
+print(plot_points)
+
+```
+
+
+# Creating plot for the entire database
+
+## Using the wide database
+
+Creating plots using the wide format data can be beneficial when you want to plot multiple data points rather than summary statistics (mean, mode etc).
+
+In a wide format, each column typically represents a different variable or measurement, making it easier to plot relationships between these variables directly. 
+
+This approach is often more straightforward for scatter plots and other visualizations that involve pairwise comparisons or multiple variables.
+
+
+
+
+
+
+## Using the facet_grid
+# Explanation:
+Using the long format data can also allow for more flexibility in visualizing data by group. The long format typically involves having one column for the variable names and another for the values, which makes it easier to apply faceting. 
+
+Faceting, such as with `facet_grid` or `facet_wrap`, allows you to create multiple plots based on the levels of one or more grouping variables. This is
+particularly useful for comparing subgroups within your data, as each subgroup gets its own individual plot.
+
+
+```{r , message=F}
+
+# Ensure the IDs are treated as factors
+wide_df$ID <- as.factor(wide_df$ID)
+
+# Plotting scores by student with geom_point and geom_text
+plot_points1 <- ggplot(wide_df, aes(x = Math, y = English, color = ID)) +
+  geom_point(size = 3) +
+  geom_text(aes(label = paste0("(", Math, ", ", English, ")")), vjust = 1.5, size = 3) +
+  scale_color_manual(values = custom_colors) +
+  labs(title = "Math vs. English Scores by Student",
+       x = "Math Score", y = "English Score") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "top")
+
+# Print the plot
+print(plot_points1)
+
+
+
+```
+
+
+
+# Long to Wide Format
+Now let's convert our long format data back to wide format.
+
+## Using spread() from tidyr
+
+```{r echo=FALSE, out.width = "90%", fig.align = "center"}
+wide_df_spread <- long_df_gather %>%
+  spread(key = Subject, value = Score)
+
+print(wide_df_spread)
+```
+Explanation:
+
+`spread()` is the opposite of `gather()`
+It takes the `Subject` column and spreads it out into separate columns
+The values in these new columns come from the `Score` column

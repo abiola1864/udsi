@@ -1,0 +1,915 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={(USDI): Merge, Join and Preparing Data for Plots},
+  pdfauthor={Abiola Oyebanjo},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{(USDI): Merge, Join and Preparing Data for Plots}
+\author{Abiola Oyebanjo}
+\date{July 4-6 , 2024}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{import-libraries-dataframes}{%
+\section{Import Libraries
+Dataframes}\label{import-libraries-dataframes}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(reshape2) }\CommentTok{\# for melt}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{set-working-directory}{%
+\section{Set Working Directory}\label{set-working-directory}}
+
+\hypertarget{joining-dataframes}{%
+\section{Joining Dataframes}\label{joining-dataframes}}
+
+\hypertarget{joining-dataframes-1}{%
+\subsection{Joining dataframes}\label{joining-dataframes-1}}
+
+Joining dataframes is a common operation when working with relational
+data. It allows us to combine information from different sources based
+on common variables.
+
+\hypertarget{creating-sample-dataframes}{%
+\subsubsection{Creating Sample
+Dataframes}\label{creating-sample-dataframes}}
+
+Let's start by creating two simple dataframes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df1 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{ID =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,}
+  \AttributeTok{Name =} \FunctionTok{c}\NormalTok{(}\StringTok{"Alice"}\NormalTok{, }\StringTok{"Bob"}\NormalTok{, }\StringTok{"Charlie"}\NormalTok{, }\StringTok{"David"}\NormalTok{, }\StringTok{"Eve"}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{df2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{ID =} \DecValTok{2}\SpecialCharTok{:}\DecValTok{6}\NormalTok{,}
+  \AttributeTok{Score =} \FunctionTok{c}\NormalTok{(}\DecValTok{85}\NormalTok{, }\DecValTok{92}\NormalTok{, }\DecValTok{78}\NormalTok{, }\DecValTok{95}\NormalTok{, }\DecValTok{88}\NormalTok{)}
+\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(df1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name
+## 1  1   Alice
+## 2  2     Bob
+## 3  3 Charlie
+## 4  4   David
+## 5  5     Eve
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(df2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID Score
+## 1  2    85
+## 2  3    92
+## 3  4    78
+## 4  5    95
+## 5  6    88
+\end{verbatim}
+
+Here, we've created two dataframes:
+
+\texttt{df1} contains student IDs and names \texttt{df2} contains
+student IDs and scores
+
+Notice that the IDs don't perfectly align between the two dataframes.
+This is intentional to demonstrate different join behaviors.
+
+\hypertarget{using-merge-from-base-r}{%
+\subsection{Using merge() from Base R}\label{using-merge-from-base-r}}
+
+The \texttt{merge()} function in base R is versatile and can perform
+various types of joins.
+
+\hypertarget{left-join}{%
+\subsection{Left Join}\label{left-join}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{left\_merge }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"ID"}\NormalTok{, }\AttributeTok{all.x =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(left\_merge)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name Score
+## 1  1   Alice    NA
+## 2  2     Bob    85
+## 3  3 Charlie    92
+## 4  4   David    78
+## 5  5     Eve    95
+\end{verbatim}
+
+Explanation:
+
+\texttt{by\ =\ "ID"} specifies that we're joining on the ``ID'' column
+
+\texttt{all.x\ =\ TRUE} means we keep all rows from the left dataframe
+(df1), even if there's no match in df2
+
+This results in NA values for scores where there's no match in df2
+
+\hypertarget{right-join}{%
+\subsection{Right Join}\label{right-join}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{right\_merge }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"ID"}\NormalTok{, }\AttributeTok{all.y =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(right\_merge)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name Score
+## 1  2     Bob    85
+## 2  3 Charlie    92
+## 3  4   David    78
+## 4  5     Eve    95
+## 5  6    <NA>    88
+\end{verbatim}
+
+Explanation:
+
+\texttt{all.y} = TRUE means we keep all rows from the right dataframe
+(df2), even if there's no match in df1 This results in NA values for
+names where there's no match in df1
+
+\hypertarget{inner-join}{%
+\subsection{Inner Join}\label{inner-join}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inner\_merge }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"ID"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(inner\_merge)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name Score
+## 1  2     Bob    85
+## 2  3 Charlie    92
+## 3  4   David    78
+## 4  5     Eve    95
+\end{verbatim}
+
+Explanation:
+
+Without \texttt{all.x} or \texttt{all.y}, merge() performs an inner join
+by default This keeps only the rows where there's a match in both
+dataframes
+
+\hypertarget{full-outer-join}{%
+\subsection{Full Outer Join}\label{full-outer-join}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{full\_merge }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"ID"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(full\_merge)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name Score
+## 1  1   Alice    NA
+## 2  2     Bob    85
+## 3  3 Charlie    92
+## 4  4   David    78
+## 5  5     Eve    95
+## 6  6    <NA>    88
+\end{verbatim}
+
+Explanation:
+
+\texttt{all\ =\ TRUE} keeps all rows from both dataframes, filling in NA
+where there's no match This is useful when you want to see all data from
+both sources, regardless of matches
+
+\hypertarget{using-dplyr-for-joins}{%
+\section{Using dplyr for Joins}\label{using-dplyr-for-joins}}
+
+The dplyr package provides more intuitive join functions that are often
+preferred in modern R programming.
+
+\hypertarget{left-join-1}{%
+\subsection{Left Join}\label{left-join-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{left\_join\_dplyr }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"ID"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(left\_join\_dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name Score
+## 1  1   Alice    NA
+## 2  2     Bob    85
+## 3  3 Charlie    92
+## 4  4   David    78
+## 5  5     Eve    95
+\end{verbatim}
+
+Explanation:
+
+\texttt{left\_join()} keeps all rows from df1 and adds matching data
+from df2 It's equivalent to the left merge we did earlier, but with a
+more readable syntax
+
+\hypertarget{right-join-1}{%
+\subsection{Right Join}\label{right-join-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{left\_join\_dplyr }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"ID"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(left\_join\_dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name Score
+## 1  1   Alice    NA
+## 2  2     Bob    85
+## 3  3 Charlie    92
+## 4  4   David    78
+## 5  5     Eve    95
+\end{verbatim}
+
+Explanation:
+
+\texttt{right\_join()} keeps all rows from df2 and adds matching data
+from df1 It's equivalent to the right merge we did earlier
+
+\hypertarget{inner-join-1}{%
+\subsection{Inner Join}\label{inner-join-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{inner\_join\_dplyr }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"ID"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(inner\_join\_dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name Score
+## 1  2     Bob    85
+## 2  3 Charlie    92
+## 3  4   David    78
+## 4  5     Eve    95
+\end{verbatim}
+
+Explanation:
+
+\texttt{inner\_join()} keeps only rows with matches in both dataframes
+It's equivalent to the inner merge we did earlier
+
+\hypertarget{full-join}{%
+\subsection{Full Join}\label{full-join}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{full\_join\_dplyr }\OtherTok{\textless{}{-}} \FunctionTok{full\_join}\NormalTok{(df1, df2, }\AttributeTok{by =} \StringTok{"ID"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(full\_join\_dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID    Name Score
+## 1  1   Alice    NA
+## 2  2     Bob    85
+## 3  3 Charlie    92
+## 4  4   David    78
+## 5  5     Eve    95
+## 6  6    <NA>    88
+\end{verbatim}
+
+Explanation:
+
+\texttt{full\_join()} keeps all rows from both dataframes, filling in NA
+where there's no match It's equivalent to the full outer merge we did
+earlier
+
+\hypertarget{reshaping-data-for-visualization-and-panel-data-analysis}{%
+\section{Reshaping Data (for Visualization and Panel Data
+Analysis)}\label{reshaping-data-for-visualization-and-panel-data-analysis}}
+
+Reshaping data involves changing the structure of a dataset without
+changing the information it contains. The two main forms are ``wide''
+and ``long'' formats. This is very helpful for visualization purposes
+and Panel (Longitudinal) data analysis. Longitudinal data involves
+repeated observations of the same variables over time for the same
+subjects. This type of data allows for the analysis of changes over time
+and the study of temporal dynamics within the data.
+
+\hypertarget{wide-to-long-format}{%
+\subsection{Wide to Long Format}\label{wide-to-long-format}}
+
+In wide format, each subject's responses are in a single row. In long
+format, each row is a single subject-variable combination.
+
+Let's create a wide format dataframe:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wide\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{ID =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,}
+  \AttributeTok{Math =} \FunctionTok{c}\NormalTok{(}\DecValTok{35}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{48}\NormalTok{, }\DecValTok{44}\NormalTok{),}
+  \AttributeTok{English =} \FunctionTok{c}\NormalTok{(}\DecValTok{92}\NormalTok{, }\DecValTok{88}\NormalTok{, }\DecValTok{95}\NormalTok{, }\DecValTok{89}\NormalTok{),}
+  \AttributeTok{Science =} \FunctionTok{c}\NormalTok{(}\DecValTok{49}\NormalTok{, }\DecValTok{85}\NormalTok{, }\DecValTok{40}\NormalTok{,}\DecValTok{55}\NormalTok{),}
+  \AttributeTok{Year =}\FunctionTok{c}\NormalTok{(}\DecValTok{2023}\NormalTok{, }\DecValTok{2023}\NormalTok{, }\DecValTok{2024}\NormalTok{,}\DecValTok{2024}\NormalTok{)}
+\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(wide\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID Math English Science Year
+## 1  1   35      92      49 2023
+## 2  2   32      88      85 2023
+## 3  1   48      95      40 2024
+## 4  2   44      89      55 2024
+\end{verbatim}
+
+\hypertarget{using-melt-from-reshape2}{%
+\subsubsection{Using melt() from
+reshape2}\label{using-melt-from-reshape2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{long\_df\_melt }\OtherTok{\textless{}{-}} \FunctionTok{melt}\NormalTok{(wide\_df, }\AttributeTok{id.vars =} \StringTok{"ID"}\NormalTok{, }
+                     \AttributeTok{variable.name =} \StringTok{"Subject"}\NormalTok{, }\AttributeTok{value.name =} \StringTok{"Score"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(long\_df\_melt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    ID Subject Score
+## 1   1    Math    35
+## 2   2    Math    32
+## 3   1    Math    48
+## 4   2    Math    44
+## 5   1 English    92
+## 6   2 English    88
+## 7   1 English    95
+## 8   2 English    89
+## 9   1 Science    49
+## 10  2 Science    85
+## 11  1 Science    40
+## 12  2 Science    55
+## 13  1    Year  2023
+## 14  2    Year  2023
+## 15  1    Year  2024
+## 16  2    Year  2024
+\end{verbatim}
+
+Explanation:
+
+\texttt{melt()} is similar to gather() but from an older package
+\texttt{id.vars} specifies which columns to keep as is
+\texttt{variable.name} and \texttt{value.name} specify names for the new
+columns
+
+\hypertarget{reshape-the-data-to-long-format-excluding-the-year-column}{%
+\subsubsection{Reshape the data to long format, excluding the Year
+column}\label{reshape-the-data-to-long-format-excluding-the-year-column}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{long\_df\_melt1 }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(wide\_df, }
+                        \AttributeTok{cols =} \FunctionTok{c}\NormalTok{(Math, English, Science), }
+                        \AttributeTok{names\_to =} \StringTok{"Subject"}\NormalTok{, }
+                        \AttributeTok{values\_to =} \StringTok{"Score"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(long\_df\_melt1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 12 x 4
+##       ID  Year Subject Score
+##    <int> <dbl> <chr>   <dbl>
+##  1     1  2023 Math       35
+##  2     1  2023 English    92
+##  3     1  2023 Science    49
+##  4     2  2023 Math       32
+##  5     2  2023 English    88
+##  6     2  2023 Science    85
+##  7     1  2024 Math       48
+##  8     1  2024 English    95
+##  9     1  2024 Science    40
+## 10     2  2024 Math       44
+## 11     2  2024 English    89
+## 12     2  2024 Science    55
+\end{verbatim}
+
+\hypertarget{using-gather-from-tidyr}{%
+\subsubsection{Using gather() from
+tidyr}\label{using-gather-from-tidyr}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{long\_df\_gather }\OtherTok{\textless{}{-}}\NormalTok{ wide\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"Subject"}\NormalTok{, }\AttributeTok{value =} \StringTok{"Score"}\NormalTok{, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(ID,Year))}
+
+\FunctionTok{print}\NormalTok{(long\_df\_gather)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    ID Year Subject Score
+## 1   1 2023    Math    35
+## 2   2 2023    Math    32
+## 3   1 2024    Math    48
+## 4   2 2024    Math    44
+## 5   1 2023 English    92
+## 6   2 2023 English    88
+## 7   1 2024 English    95
+## 8   2 2024 English    89
+## 9   1 2023 Science    49
+## 10  2 2023 Science    85
+## 11  1 2024 Science    40
+## 12  2 2024 Science    55
+\end{verbatim}
+
+Explanation:
+
+\texttt{gather()} takes all columns except ID and creates two new
+columns:
+
+\texttt{Subject}: contains the original column names (Math, English,
+Science)
+
+\texttt{Score}: contains the values from those columns
+
+\hypertarget{using-pivot_longer-from-tidyverse-preferred}{%
+\subsection{Using pivot\_longer from tidyverse
+(preferred)}\label{using-pivot_longer-from-tidyverse-preferred}}
+
+For this course, we will be using \texttt{pivot\_longer} from the
+\texttt{tidyverse} package frequently. The reason is that, like other
+similar functions discussed above, \texttt{pivot\_longer} allows us to
+transform data from a wide format to a long format, which is essential
+for many types of data analysis and visualization tasks. More on in the
+next section:
+
+\hypertarget{preparing-data-for-visualization}{%
+\section{Preparing Data for
+Visualization}\label{preparing-data-for-visualization}}
+
+\texttt{pivot\_longer}: This function is particularly useful because it
+converts multiple columns into key-value pairs, creating a single column
+for the variable names and another for the values. This is crucial when
+we need a single column for the x or y axis in our plots. In wide format
+data, having multiple columns for what we want to plot can complicate
+the visualization process.
+
+\texttt{summarize}: We use this function to calculate summary statistics
+such as average percentages for each subject across all rows.
+
+\texttt{starts\_with}: This function helps us select columns that start
+with a specific string, which is useful when dealing with data that has
+multiple similarly named columns, like percentages in this example.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Transform from wide to long using pivot\_longer}
+\NormalTok{long\_df\_pivot }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(wide\_df,}
+            \AttributeTok{cols =} \SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(ID, Year), }\CommentTok{\# Columns to pivot (excluding ID and Year)}
+            \AttributeTok{names\_to =} \StringTok{"Subject"}\NormalTok{, }\CommentTok{\# New column for variable names}
+            \AttributeTok{values\_to =} \StringTok{"Score"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# New column for values}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ID =} \FunctionTok{as.factor}\NormalTok{(ID))  }\CommentTok{\# Convert ID to factor}
+
+
+\CommentTok{\# Print the resulting long data frame}
+\FunctionTok{print}\NormalTok{(long\_df\_pivot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 12 x 4
+##    ID     Year Subject Score
+##    <fct> <dbl> <chr>   <dbl>
+##  1 1      2023 Math       35
+##  2 1      2023 English    92
+##  3 1      2023 Science    49
+##  4 2      2023 Math       32
+##  5 2      2023 English    88
+##  6 2      2023 Science    85
+##  7 1      2024 Math       48
+##  8 1      2024 English    95
+##  9 1      2024 Science    40
+## 10 2      2024 Math       44
+## 11 2      2024 English    89
+## 12 2      2024 Science    55
+\end{verbatim}
+
+\hypertarget{preparing-data-for-plotting}{%
+\subsubsection{Preparing data for
+plotting}\label{preparing-data-for-plotting}}
+
+Long format and summarizing the data are important steps to plotting.
+Let plots the average scores for each course using ggplot by following
+the steps below:
+
+\hypertarget{step-1-use-mutate-to-calculate-percentages-in-a-new-vector}{%
+\subsection{Step 1: Use mutate to calculate percentages in a new
+vector}\label{step-1-use-mutate-to-calculate-percentages-in-a-new-vector}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_percent }\OtherTok{\textless{}{-}}\NormalTok{ wide\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{total =}\NormalTok{ Math }\SpecialCharTok{+}\NormalTok{ English }\SpecialCharTok{+}\NormalTok{ Science) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{percent\_Math =}\NormalTok{ Math }\SpecialCharTok{/}\NormalTok{ total }\SpecialCharTok{*} \DecValTok{100}\NormalTok{,}
+         \AttributeTok{percent\_English =}\NormalTok{ English }\SpecialCharTok{/}\NormalTok{ total }\SpecialCharTok{*} \DecValTok{100}\NormalTok{,}
+         \AttributeTok{percent\_Science =}\NormalTok{ Science }\SpecialCharTok{/}\NormalTok{ total }\SpecialCharTok{*} \DecValTok{100}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(data\_percent)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ID Math English Science Year total percent_Math percent_English
+## 1  1   35      92      49 2023   176     19.88636        52.27273
+## 2  2   32      88      85 2023   205     15.60976        42.92683
+## 3  1   48      95      40 2024   183     26.22951        51.91257
+## 4  2   44      89      55 2024   188     23.40426        47.34043
+##   percent_Science
+## 1        27.84091
+## 2        41.46341
+## 3        21.85792
+## 4        29.25532
+\end{verbatim}
+
+\hypertarget{step-2-calculate-averagemean-percentages-per-course}{%
+\subsection{Step 2: Calculate average/mean percentages per
+course}\label{step-2-calculate-averagemean-percentages-per-course}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Calculate average percentages}
+\NormalTok{avg\_percent }\OtherTok{\textless{}{-}}\NormalTok{ data\_percent }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{avg\_Math =} \FunctionTok{mean}\NormalTok{(percent\_Math),}
+            \AttributeTok{avg\_English =} \FunctionTok{mean}\NormalTok{(percent\_English),}
+            \AttributeTok{avg\_Science =} \FunctionTok{mean}\NormalTok{(percent\_Science))}
+
+\NormalTok{avg\_percent}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rrr@{}}
+\toprule\noalign{}
+avg\_Math & avg\_English & avg\_Science \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+21.28247 & 48.61314 & 30.10439 \\
+\end{longtable}
+
+\hypertarget{step-3-use-starts_with-in-pivot_longer-to-pivot-data-to-long}{%
+\subsection{Step 3: use starts\_with (in pivot\_longer) to pivot data to
+long}\label{step-3-use-starts_with-in-pivot_longer-to-pivot-data-to-long}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_long }\OtherTok{\textless{}{-}}\NormalTok{ avg\_percent }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{starts\_with}\NormalTok{(}\StringTok{"avg\_"}\NormalTok{),}
+               \AttributeTok{names\_to =} \StringTok{"Subject"}\NormalTok{,}
+               \AttributeTok{values\_to =} \StringTok{"Percentage"}\NormalTok{) }
+\FunctionTok{print}\NormalTok{(data\_long)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   Subject     Percentage
+##   <chr>            <dbl>
+## 1 avg_Math          21.3
+## 2 avg_English       48.6
+## 3 avg_Science       30.1
+\end{verbatim}
+
+\hypertarget{step-4-rename-columns}{%
+\subsection{Step 4: Rename columns}\label{step-4-rename-columns}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{avg\_percent }\OtherTok{\textless{}{-}}\NormalTok{ data\_long }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Subject =} \FunctionTok{factor}\NormalTok{(Subject, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"avg\_Math"}\NormalTok{, }\StringTok{"avg\_English"}\NormalTok{, }\StringTok{"avg\_Science"}\NormalTok{),}
+                          \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Math"}\NormalTok{, }\StringTok{"English"}\NormalTok{, }\StringTok{"Science"}\NormalTok{)))}
+
+\FunctionTok{print}\NormalTok{(avg\_percent)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   Subject Percentage
+##   <fct>        <dbl>
+## 1 Math          21.3
+## 2 English       48.6
+## 3 Science       30.1
+\end{verbatim}
+
+\hypertarget{step-5-plot-the-data}{%
+\subsection{Step 5: Plot the data}\label{step-5-plot-the-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plotting using ggplot2}
+\FunctionTok{ggplot}\NormalTok{(avg\_percent, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Subject, }\AttributeTok{y =}\NormalTok{ Percentage, }\AttributeTok{fill =}\NormalTok{ Subject)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Percentage Distribution by Subject"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Subject"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Percentage"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Merge_Join_USDI_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\hypertarget{step-6-plotting-with-customizations}{%
+\subsection{Step 6: Plotting with
+customizations}\label{step-6-plotting-with-customizations}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define custom color palette}
+\NormalTok{custom\_colors }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"\#126e96"}\NormalTok{, }\StringTok{"\#8B4513"}\NormalTok{, }\StringTok{"\#CD853F"}\NormalTok{) }
+
+\CommentTok{\# Plotting with customizations}
+\NormalTok{plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(avg\_percent, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Subject, }\AttributeTok{y =}\NormalTok{ Percentage, }\AttributeTok{fill =}\NormalTok{ Subject)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ custom\_colors) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Percentage Distribution by Subject"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Subject"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Percentage"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{), }\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Percentage"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste0}\NormalTok{(}\FunctionTok{round}\NormalTok{(Percentage), }\StringTok{"\%"}\NormalTok{)), }\AttributeTok{hjust =} \FloatTok{3.5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{()}
+
+\CommentTok{\# Print the plot}
+\FunctionTok{print}\NormalTok{(plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Merge_Join_USDI_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\hypertarget{step-7-plotting-with-customizations-with-geom_point-and-faceting}{%
+\subsection{Step 7: Plotting with customizations with geom\_point and
+faceting}\label{step-7-plotting-with-customizations-with-geom_point-and-faceting}}
+
+\hypertarget{scores-by-year-for-each-subject-per-student}{%
+\subsubsection{Scores by Year for Each Subject per
+Student}\label{scores-by-year-for-each-subject-per-student}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Ensure the Year are treated as factors}
+\NormalTok{long\_df\_pivot}\SpecialCharTok{$}\NormalTok{Year}\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(long\_df\_pivot}\SpecialCharTok{$}\NormalTok{Year)}
+
+\CommentTok{\# Plotting scores by Year for Each Subject with points, lines, and y{-}axis labels}
+\NormalTok{plot\_points }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(long\_df\_pivot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Subject, }\AttributeTok{y =}\NormalTok{ Score, }\AttributeTok{color =}\NormalTok{ Subject)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{linewidth =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ ID), }\AttributeTok{linewidth =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}  \CommentTok{\# Add a line connecting points for each ID}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ Score), }\AttributeTok{vjust=}\FloatTok{0.9}\NormalTok{, }\AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{1.0}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}  \CommentTok{\# Add y{-}axis labels}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ custom\_colors) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Scores by Year for Each Subject per Student"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Subject"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Score"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{1.5}\NormalTok{), }\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_grid}\NormalTok{(Year }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ID, }\AttributeTok{scales =} \StringTok{"free\_x"}\NormalTok{)  }\CommentTok{\# Facet by Year}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in geom_point(linewidth = 3): Ignoring unknown parameters: `linewidth`
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print the plot}
+\FunctionTok{print}\NormalTok{(plot\_points)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Merge_Join_USDI_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\hypertarget{creating-plot-for-the-entire-database}{%
+\section{Creating plot for the entire
+database}\label{creating-plot-for-the-entire-database}}
+
+\hypertarget{using-the-wide-database}{%
+\subsection{Using the wide database}\label{using-the-wide-database}}
+
+Creating plots using the wide format data can be beneficial when you
+want to plot multiple data points rather than summary statistics (mean,
+mode etc).
+
+In a wide format, each column typically represents a different variable
+or measurement, making it easier to plot relationships between these
+variables directly.
+
+This approach is often more straightforward for scatter plots and other
+visualizations that involve pairwise comparisons or multiple variables.
+
+\hypertarget{using-the-facet_grid}{%
+\subsection{Using the facet\_grid}\label{using-the-facet_grid}}
+
+\hypertarget{explanation}{%
+\section{Explanation:}\label{explanation}}
+
+Using the long format data can also allow for more flexibility in
+visualizing data by group. The long format typically involves having one
+column for the variable names and another for the values, which makes it
+easier to apply faceting.
+
+Faceting, such as with \texttt{facet\_grid} or \texttt{facet\_wrap},
+allows you to create multiple plots based on the levels of one or more
+grouping variables. This is particularly useful for comparing subgroups
+within your data, as each subgroup gets its own individual plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Ensure the IDs are treated as factors}
+\NormalTok{wide\_df}\SpecialCharTok{$}\NormalTok{ID }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(wide\_df}\SpecialCharTok{$}\NormalTok{ID)}
+
+\CommentTok{\# Plotting scores by student with geom\_point and geom\_text}
+\NormalTok{plot\_points1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(wide\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Math, }\AttributeTok{y =}\NormalTok{ English, }\AttributeTok{color =}\NormalTok{ ID)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"("}\NormalTok{, Math, }\StringTok{", "}\NormalTok{, English, }\StringTok{")"}\NormalTok{)), }\AttributeTok{vjust =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ custom\_colors) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Math vs. English Scores by Student"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Math Score"}\NormalTok{, }\AttributeTok{y =} \StringTok{"English Score"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{), }\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
+
+\CommentTok{\# Print the plot}
+\FunctionTok{print}\NormalTok{(plot\_points1)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Merge_Join_USDI_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\hypertarget{long-to-wide-format}{%
+\section{Long to Wide Format}\label{long-to-wide-format}}
+
+Now let's convert our long format data back to wide format.
+
+\hypertarget{using-spread-from-tidyr}{%
+\subsection{Using spread() from tidyr}\label{using-spread-from-tidyr}}
+
+\begin{verbatim}
+##   ID Year English Math Science
+## 1  1 2023      92   35      49
+## 2  1 2024      95   48      40
+## 3  2 2023      88   32      85
+## 4  2 2024      89   44      55
+\end{verbatim}
+
+Explanation:
+
+\texttt{spread()} is the opposite of \texttt{gather()} It takes the
+\texttt{Subject} column and spreads it out into separate columns The
+values in these new columns come from the \texttt{Score} column
+
+\end{document}
