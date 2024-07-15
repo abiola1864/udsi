@@ -82,4 +82,8 @@ The main components covered in the workshop include:
 ## Author
 This workshop was authored by Abiola Oyebanjo. For any inquiries, please contact Abiola Oyebanjo at [abiola@empowerlocals.org](mailto:abiola@empowerlocals.org).
 
+## Sponsors
+
+The first edition is sponsored by the Center for Effective Global Action (CEGA), University of California, Berkeley as a Catalyst Fund for Abiola Oyebanjo. The local partner for this project is Empowerment for Local People Foundation, Nigeria.
+
 Enjoy the workshop and happy coding!
